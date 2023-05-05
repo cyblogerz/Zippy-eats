@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zippy_eats/data/dummy_data.dart';
+import 'package:zippy_eats/screens/meals.dart';
 
 import '../models/category.dart';
 
@@ -9,7 +11,13 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (ctx) =>
+                    MealsScreen(title: category.title, meals: dummyMeals)));
+      },
       splashColor: Theme.of(context).primaryColor,
       child: Container(
         padding: const EdgeInsets.all(16),
