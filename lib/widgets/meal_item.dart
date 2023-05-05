@@ -12,6 +12,13 @@ class MealItem extends StatelessWidget {
   }) : super(key: key);
   final Meal meal;
 
+  String get complexityText {
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(
+          1,
+        ); //returns enum value as a string
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -55,7 +62,10 @@ class MealItem extends StatelessWidget {
                         children: [
                           MealItemTrait(
                               icon: Icons.schedule,
-                              label: '${meal.duration} min')
+                              label: '${meal.duration} min'),
+                          SizedBox(
+                            width: 12,
+                          )
                         ],
                       )
                     ],
