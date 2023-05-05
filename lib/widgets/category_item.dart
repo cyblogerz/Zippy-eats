@@ -5,18 +5,16 @@ import 'package:zippy_eats/screens/meals.dart';
 import '../models/category.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.category});
+  const CategoryItem(
+      {super.key, required this.category, required this.onSelectCategory});
   final Category category;
+  final void Function() onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (ctx) =>
-                    MealsScreen(title: category.title, meals: dummyMeals)));
+        onSelectCategory();
       },
       splashColor: Theme.of(context).primaryColor,
       child: Container(

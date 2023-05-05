@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:zippy_eats/data/dummy_data.dart';
+import 'package:zippy_eats/models/category.dart';
+import 'package:zippy_eats/screens/meals.dart';
 import 'package:zippy_eats/widgets/category_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
+
+  void _selectCategory(BuildContext context, Category category) {
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (ctx) =>
+                MealsScreen(title: category.title, meals: filteredMeals)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +34,12 @@ class CategoriesScreen extends StatelessWidget {
             mainAxisSpacing: 20),
         children: [
           for (final category in availableCategories)
-            CategoryItem(category: category)
+            CategoryItem(
+              category: category,
+              onSelectCategory: () {
+                _selectCategory(context, category);
+              },
+            )
         ],
       ),
     );
