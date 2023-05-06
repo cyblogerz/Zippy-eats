@@ -13,10 +13,15 @@ class MealItem extends StatelessWidget {
   final Meal meal;
 
   String get complexityText {
+    //getter
     return meal.complexity.name[0].toUpperCase() +
-        meal.complexity.name.substring(
-          1,
-        ); //returns enum value as a string
+        meal.complexity.name.substring(1); //returns enum value as a string
+  }
+
+  String get affordabilityText {
+    //getter
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1); //returns enum value as a string
   }
 
   @override
@@ -63,9 +68,17 @@ class MealItem extends StatelessWidget {
                           MealItemTrait(
                               icon: Icons.schedule,
                               label: '${meal.duration} min'),
-                          SizedBox(
+                          const SizedBox(
                             width: 12,
-                          )
+                          ),
+                          MealItemTrait(
+                              icon: Icons.work, label: complexityText),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          MealItemTrait(
+                              icon: Icons.attach_money,
+                              label: affordabilityText)
                         ],
                       )
                     ],
