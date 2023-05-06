@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import 'package:zippy_eats/models/meal.dart';
+import 'package:zippy_eats/screens/meal_details_screen.dart';
 import 'package:zippy_eats/widgets/meal_item_trait.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
     Key? key,
     required this.meal,
+    required this.onSelectMeal,
   }) : super(key: key);
   final Meal meal;
+  final void Function(BuildContext context, Meal meal) onSelectMeal;
 
   String get complexityText {
     //getter
@@ -32,7 +35,9 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(context, meal);
+        },
         child: Stack(
           children: <Widget>[
             FadeInImage(
@@ -64,6 +69,7 @@ class MealItem extends StatelessWidget {
                         height: 12,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MealItemTrait(
                               icon: Icons.schedule,
