@@ -3,6 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:zippy_eats/screens/categories.dart';
 import 'package:zippy_eats/screens/meals.dart';
+import 'package:zippy_eats/widgets/main_drawer.dart';
+
+import '../models/meal.dart';
 
 class Tabs extends StatefulWidget {
   const Tabs({super.key});
@@ -13,22 +16,49 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   int _selectedPageIndex = 0;
+  final List<Meal> _favouriteMeals = [];
   void selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
 
+  void _infoMessage(String msg) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+    ));
+  }
+
+  void _toggleFavouriteStatus(Meal meal) {
+    final _isExisting = _favouriteMeals.contains(meal);
+    if (_isExisting) {
+      setState(() {
+        _favouriteMeals.remove(meal);
+        _infoMessage("Meal is no longer favourite");
+      });
+    } else {
+      setState(() {
+        _favouriteMeals.add(meal);
+        _infoMessage("Marked as favourite");
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const CategoriesScreen();
+    Widget activePage = CategoriesScreen(
+      toggleFavourite: _toggleFavouriteStatus,
+    );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = const MealsScreen(meals: []);
+      activePage = MealsScreen(
+          meals: _favouriteMeals, onToggleFavourite: _toggleFavouriteStatus);
       activePageTitle = 'Your Favourites';
     }
     return Scaffold(
+      drawer: MainDrawer(),
       appBar: AppBar(
         title: Text(activePageTitle),
       ),

@@ -4,8 +4,12 @@ import 'package:zippy_eats/models/category.dart';
 import 'package:zippy_eats/screens/meals.dart';
 import 'package:zippy_eats/widgets/category_item.dart';
 
+import '../models/meal.dart';
+
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key, required this.toggleFavourite});
+
+  final void Function(Meal meal) toggleFavourite;
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals
@@ -15,8 +19,10 @@ class CategoriesScreen extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (ctx) =>
-                MealsScreen(title: category.title, meals: filteredMeals)));
+            builder: (ctx) => MealsScreen(
+                title: category.title,
+                meals: filteredMeals,
+                onToggleFavourite: toggleFavourite)));
   }
 
   @override
