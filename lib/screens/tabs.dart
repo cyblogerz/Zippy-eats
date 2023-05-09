@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:zippy_eats/screens/categories.dart';
+import 'package:zippy_eats/screens/filters.dart';
 import 'package:zippy_eats/screens/meals.dart';
 import 'package:zippy_eats/widgets/main_drawer.dart';
 
@@ -45,6 +46,14 @@ class _TabsState extends State<Tabs> {
     }
   }
 
+  void _setScreen(String Identifier) {
+    Navigator.pop(context);
+    if (Identifier == "filters") {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (ctx) => const FiltersScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = CategoriesScreen(
@@ -58,7 +67,9 @@ class _TabsState extends State<Tabs> {
       activePageTitle = 'Your Favourites';
     }
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
