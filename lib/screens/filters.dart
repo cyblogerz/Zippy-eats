@@ -13,6 +13,8 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   var _glutenFreeSet = false;
+  var _lactoseFreeSet = false;
+  var _vegSet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +51,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
-            value: _glutenFreeSet,
+            value: _lactoseFreeSet,
             onChanged: (isChecked) {
               setState(() {
-                _glutenFreeSet = isChecked;
+                _lactoseFreeSet = isChecked;
               });
             },
             title: Text(
@@ -71,10 +73,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
             contentPadding: const EdgeInsets.only(left: 34, right: 22),
           ),
           SwitchListTile(
-            value: _glutenFreeSet,
+            value: _vegSet,
             onChanged: (isChecked) {
               setState(() {
-                _glutenFreeSet = isChecked;
+                _vegSet = isChecked;
               });
             },
             title: Text(
