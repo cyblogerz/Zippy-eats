@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:zippy_eats/models/meal.dart';
+import 'package:zippy_eats/providers/favourites_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
+class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
-    required this.onToggleFavorite,
   });
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(title: Text(meal.title), actions: [
           IconButton(
             onPressed: () {
-              onToggleFavorite(meal);
+              bool status = ref
+                  .read(favouriteMealsProvider.notifier)
+                  .toggleMealFavouriteStatus(
+                      meal); // inside a function just use read
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(status
+                      ? "Item add to favourites"
+                      : "Meal removed from favourites"),
+                ),
+              );
             },
             icon: const Icon(Icons.star),
           )
